@@ -1,3 +1,4 @@
+
 """Script principal para executar o jogo Aventura no Labirinto."""
 
 import argparse
@@ -35,9 +36,9 @@ def main():
                     pos, pontuacao = mover(labirinto, pos, pontuacao)
                     if labirinto[pos[0]][pos[1]] == "S":
                         animacao_vitoria(args.name)
-                        break
             case "2":
                 imprime_instrucoes()
+                input("Pressione Enter para continuar...")
             case "3" if args.auto:
                 labirinto = criar_labirinto(args.dificuldade)
                 pos, _ = iniciar_jogador(labirinto)

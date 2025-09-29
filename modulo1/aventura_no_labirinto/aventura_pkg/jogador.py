@@ -30,36 +30,43 @@ def mover(labirinto, pos_atual, pontuacao):
     global ouvinte
     nova_pos = pos_atual
     nova_pontuacao = pontuacao
+    moved = False
 
     def on_press(key):
-        nonlocal nova_pos, nova_pontuacao
+        nonlocal nova_pos, nova_pontuacao, moved
         try:
             if key == keyboard.Key.up:
                 nova_pos = (nova_pos[0] - 1, nova_pos[1])
+                moved = True
             elif key == keyboard.Key.down:
                 nova_pos = (nova_pos[0] + 1, nova_pos[1])
+                moved = True
             elif key == keyboard.Key.left:
                 nova_pos = (nova_pos[0], nova_pos[1] - 1)
+                moved = True
             elif key == keyboard.Key.right:
                 nova_pos = (nova_pos[0], nova_pos[1] + 1)
+                moved = True
             elif key == keyboard.Key.esc:
-                return False 
+                moved = True  # Consider esc as a move to exit
+                return False
         except AttributeError:
             pass
 
-
-        if (0 <= nova_pos[0] < len(labirinto) and 
-            0 <= nova_pos[1] < len(labirinto[0]) and 
-            labirinto[nova_pos[0]][nova_pos[1]] != "#"):
-            if labirinto[nova_pos[0]][nova_pos[1]] == "*":
-                nova_pontuacao += 10
-                labirinto[nova_pos[0]][nova_pos[1]] = " " 
-        else:
-            nova_pos = pos_atual  
+        if moved:
+            if (0 <= nova_pos[0] < len(labirinto) and
+                0 <= nova_pos[1] < len(labirinto[0]) and
+                labirinto[nova_pos[0]][nova_pos[1]] != "#"):
+                if labirinto[nova_pos[0]][nova_pos[1]] == "*":
+                    nova_pontuacao += 10
+                    labirinto[nova_pos[0]][nova_pos[1]] = " "
+            else:
+                nova_pos = pos_atual
+            ouvinte.stop()
 
     ouvinte = keyboard.Listener(on_press=on_press)
     ouvinte.start()
-    ouvinte.join(timeout=0.1)
+    ouvinte.join()
     return nova_pos, nova_pontuacao
 
 def resolver_labirinto(labirinto, pos_atual, caminho=None):
