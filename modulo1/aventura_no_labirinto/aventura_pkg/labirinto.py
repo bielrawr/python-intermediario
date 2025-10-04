@@ -50,18 +50,22 @@ def imprimir_labirinto(labirinto, pos_jogador):
         pos_jogador (tuple): Posição (linha, coluna) do jogador.
     """
     os.system('cls' if os.name == 'nt' else 'clear')  # Limpa o terminal (Windows ou Linux/Mac)
-    console.print("\n")  # Adiciona uma linha em branco no topo
+    console.print("\n[bold cyan]┌" + "─" * (len(labirinto[0]) * 2 + 1) + "┐[/]")
+    
     for i in range(len(labirinto)):
+        console.print("[bold cyan]│[/] ", end="")
         for j in range(len(labirinto[i])):
             if (i, j) == pos_jogador:
                 console.print("[bold green]J[/]", end=" ")
             else:
                 if labirinto[i][j] == "#":
-                    console.print("[grey]#[/]", end=" ")
+                    console.print("[bold black on white]█[/]", end=" ")
                 elif labirinto[i][j] == "*":
-                    console.print("[yellow]*[/]", end=" ")
+                    console.print("[bold yellow]★[/]", end=" ")
                 elif labirinto[i][j] == "S":
-                    console.print("[red]S[/]", end=" ")
+                    console.print("[bold red]⚑[/]", end=" ")
                 else:
-                    console.print(" ", end=" ")
-        console.print()  # Nova linha após cada linha do labirinto
+                    console.print("[dim]·[/]", end=" ")
+        console.print("[bold cyan]│[/]")
+    
+    console.print("[bold cyan]└" + "─" * (len(labirinto[0]) * 2 + 1) + "┘[/]\n")

@@ -1,6 +1,8 @@
+"""Módulo para controle do jogador e movimentação."""
 
 from pynput import keyboard
 from rich.console import Console
+from .utils import som_coleta
 
 console = Console()
 ouvinte = None
@@ -25,15 +27,16 @@ def mover(labirinto, pos_atual, pontuacao):
         pontuacao (int): Pontuação atual.
 
     Returns:
-        tuple: Nova posição e pontuação atualizada.
+        tuple: Nova posição, pontuação atualizada e flag de saída (pos, pontos, sair).
     """
     global ouvinte
     nova_pos = pos_atual
     nova_pontuacao = pontuacao
     moved = False
+    sair = False
 
     def on_press(key):
-        nonlocal nova_pos, nova_pontuacao, moved
+        nonlocal nova_pos, nova_pontuacao, moved, sair
         try:
             if key == keyboard.Key.up:
                 nova_pos = (nova_pos[0] - 1, nova_pos[1])
@@ -48,26 +51,33 @@ def mover(labirinto, pos_atual, pontuacao):
                 nova_pos = (nova_pos[0], nova_pos[1] + 1)
                 moved = True
             elif key == keyboard.Key.esc:
-                moved = True  # Consider esc as a move to exit
+                sair = True
+                moved = True
                 return False
         except AttributeError:
             pass
 
-        if moved:
+        if moved and not sair:
+            # Verifica se a nova posição é válida
             if (0 <= nova_pos[0] < len(labirinto) and
                 0 <= nova_pos[1] < len(labirinto[0]) and
                 labirinto[nova_pos[0]][nova_pos[1]] != "#"):
+                # Verifica se coletou um item
                 if labirinto[nova_pos[0]][nova_pos[1]] == "*":
                     nova_pontuacao += 10
-                    labirinto[nova_pos[0]][nova_pos[1]] = " "
+                    labirinto[nova_pos[0]][nova_pos[1]] = " "  # Remove o item
+                    som_coleta()  # Toca som de coleta
             else:
+                # Posição inválida, volta para a posição anterior
                 nova_pos = pos_atual
+            
+        if moved:
             ouvinte.stop()
 
     ouvinte = keyboard.Listener(on_press=on_press)
     ouvinte.start()
     ouvinte.join()
-    return nova_pos, nova_pontuacao
+    return nova_pos, nova_pontuacao, sair
 
 def resolver_labirinto(labirinto, pos_atual, caminho=None):
     """Função recursiva que encontra o caminho até a saída.
