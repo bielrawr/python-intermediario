@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+    <style>
+        .login-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .checkbox-group {
+            margin-bottom: 20px;
+        }
+    </style>
+    <div class="login-form">
+        <h1>Login</h1>
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="username">Usuário:</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" name="password" required>
+            </div>
+            <div class="checkbox-group">
+                <label for="remember">
+                    <input type="checkbox" id="remember" name="remember">
+                    Lembrar de mim
+                </label>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+    <style>
+        .cadastro-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        .checkbox-group {
+            margin-bottom: 20px;
+        }
+    </style>
+    <div class="cadastro-form">
+        <h1>Cadastro</h1>
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="username">Usuário:</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="profile_pic">Foto de Perfil (URL):</label>
+                <input type="url" name="profile_pic">
+            </div>
+            <div class="form-group">
+                <label for="bio">Bio:</label>
+                <textarea name="bio" rows="3" cols="40"></textarea>
+            </div>
+            <div class="checkbox-group">
+                <label for="remember">
+                    <input type="checkbox" id="remember" name="remember">
+                    Lembrar de mim
+                </label>
+            </div>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+{% endblock %}

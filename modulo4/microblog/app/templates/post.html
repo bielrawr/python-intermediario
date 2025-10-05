@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+    <style>
+        .post-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+    </style>
+    <div class="post-form">
+        <h1>Escrever Post</h1>
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="body">Post:</label>
+                <textarea name="body" rows="4" cols="50" required></textarea>
+            </div>
+            <button type="submit">Publicar</button>
+        </form>
+    </div>
+{% endblock %}

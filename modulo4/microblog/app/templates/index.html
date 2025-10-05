@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+    <style>
+        .profile-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .profile-pic {
+            max-width: 120px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .bio {
+            font-style: italic;
+            color: #7f8c8d;
+        }
+        .post-list {
+            margin-top: 20px;
+        }
+        .post-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        .post-author {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .post-time {
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        .post-link {
+            display: inline-block;
+            margin-top: 10px;
+            color: #3498db;
+            text-decoration: none;
+        }
+        .post-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+    {% if user.is_authenticated %}
+        <div class="profile-card">
+            <h1>Olá, {{ user.username }}!</h1>
+            {% if user.profile_pic %}
+                <img src="{{ user.profile_pic }}" alt="Foto de perfil de {{ user.username }}" class="profile-pic">
+            {% endif %}
+            {% if user.bio %}
+                <p class="bio">{{ user.bio }}</p>
+            {% endif %}
+            <a href="/post" class="post-link">Escrever post</a>
+        </div>
+        {% if posts %}
+            <h2>Timeline</h2>
+            <div class="post-list">
+                {% for post in posts %}
+                    <div class="post-item">
+                        <span class="post-author">{{ post.author.username }}</span>
+                        <span class="post-time"> - {{ post.timestamp.strftime('%d/%m/%Y %H:%M') }}</span>
+                        <p>{{ post.body }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Nenhum post recente.</p>
+        {% endif %}
+    {% else %}
+        <h1>Olá, deseja fazer login?</h1>
+    {% endif %}
+{% endblock %}
